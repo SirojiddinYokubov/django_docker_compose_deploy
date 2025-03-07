@@ -1,0 +1,43 @@
+services:
+  web:
+    container_name: web
+    image: web:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME-default_db}
+      - DB_USER=${DB_USER-default_user}
+      - DB_PASSWORD=${DB_PASSWORD-default_pass}
+    depends_on:
+      - db
+    volumes:
+#      - static_volume:/app/static
+      - ./static_data:/app/static
+      - media_volume:/app/media
+    env_file:
+      - .env
+
+  db:
+    container_name: db
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD-default_pass}
+      POSTGRES_USER: ${DB_USER-default_user}
+      POSTGRES_DB: ${DB_NAME-default_db}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+    postgres_data:
+      name: postgres_data
+    static_volume:
+      name: static_volume
+    media_volume:
+      name: media_volume
