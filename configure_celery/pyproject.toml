@@ -1,0 +1,26 @@
+[project]
+name = "multi-environment"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Sirojiddin Yokubov",email = "yakubov9791999@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django (==5.1.6)",
+    "psycopg2-binary (==2.9.10)",
+    "gunicorn (==23.0.0)",
+    "python-decouple (>=3.8,<4.0)",
+    "django-redis (>=5.4.0,<6.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.local.dependencies]
+django-debug-toolbar = "^5.0.1"
+pytest = "^8.3.5"
+

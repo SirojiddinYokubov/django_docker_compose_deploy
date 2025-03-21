@@ -1,0 +1,75 @@
+services:
+  web:
+    container_name: web-${ENVIRONMENT-dev}
+    image: web-${ENVIRONMENT-dev}:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT-dev}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - static_volume:/app/static
+#      - ./static_data:/app/static
+      - media_volume:/app/media
+    env_file:
+      - .env.${ENVIRONMENT-dev}
+    networks:
+      - network
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "http://localhost:8000/health/" ]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 40s
+    restart: always
+
+  db:
+    container_name: db-${ENVIRONMENT-dev}
+    image: postgres:15
+    env_file:
+      - .env.${ENVIRONMENT-dev}
+    expose:
+      - "5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-demo_user} -d ${DB_NAME:-demo_db}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  redis:
+    container_name: redis-${ENVIRONMENT-dev}
+    image: redis:7-alpine
+    restart: always
+    expose:
+      - "6379"
+    networks:
+      - network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+    postgres_data:
+      name: postgres_data_${ENVIRONMENT-dev}
+    static_volume:
+      name: static_volume_${ENVIRONMENT-dev}
+    media_volume:
+      name: media_volume_${ENVIRONMENT-dev}
+
+networks:
+  network:
+    name: network-${ENVIRONMENT-dev}

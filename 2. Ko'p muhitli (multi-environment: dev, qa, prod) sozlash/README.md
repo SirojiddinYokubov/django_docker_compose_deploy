@@ -5,10 +5,10 @@ This guide covers essential DevOps and Django-related topics for handling enviro
 ## Topics Covered
 
 ### 1. Install and configure poetry
-- [ ] Why poetry?
-- [ ] Configure Poetry in Dockerfile
-- [ ] Install dependencies in Dockerfile or entrypoint.sh
-- [ ] Difference between installing dependencies in Dockerfile and entrypoint.sh
+- [x] Why poetry?
+- [x] Configure Poetry in Dockerfile
+- [x] Install dependencies in Dockerfile or entrypoint.sh
+- [x] Difference between installing dependencies in Dockerfile and entrypoint.sh
 
 <details><summary>Help guide</summary>
 
@@ -42,11 +42,11 @@ poetry install --without dev --no-root
 
 Source: [Django Settings: Best Practices](https://code.djangoproject.com/wiki/SplitSettings)
 
-- [ ] Configure `defaults.py`, `live.py`, and `testing.py` files
-- [ ] Load settings based on the environment
-- [ ] Read environment variables in Django settings with `decouple`
-- [ ] Manage `.env` files for testing and live environments
-- [ ] Read environment variables from different .env files in docker-compose.yml
+- [x] Configure `defaults.py`, `live.py`, and `testing.py` files
+- [x] Load settings based on the environment
+- [x] Read environment variables in Django settings with `decouple`
+- [x] Manage `.env` files for testing and live environments
+- [x] Read environment variables from different .env files in docker-compose.yml
 
 <details><summary>Help guide</summary>
 
@@ -104,9 +104,9 @@ DATABASES = {
 
 ### 3. Configuring Redis in Django Settings and Docker Compose
 
-- [ ] Install Redis in Django
-- [ ] Configure Redis in Django settings
-- [ ] Add Redis service in Docker Compose
+- [x] Install Redis in Django
+- [x] Configure Redis in Django settings
+- [x] Add Redis service in Docker Compose
 
 <details><summary>Help guide</summary>
 
@@ -148,8 +148,8 @@ services:
 
 ### 4. Installing Packages in Dockerfile
 
-- [ ] Install packages in Dockerfile
-- [ ] how to use netcat (`nc`) in entrypoint.sh
+- [x] Install packages in Dockerfile
+- [x] how to use netcat (`nc`) in entrypoint.sh
 
 <details><summary>Help guide</summary>
 
@@ -177,9 +177,9 @@ fi
 
 ### 5. Improve Docker Compose Services
 
-- [ ] Configure network in Docker Compose
-- [ ] Configure health checks for services
-- [ ] Configure restart policy for services
+- [x] Configure network in Docker Compose
+- [x] Configure health checks for services
+- [x] Configure restart policy for services
 
 <details><summary>Help guide</summary>
 
