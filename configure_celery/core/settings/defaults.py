@@ -34,7 +34,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'sales',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +128,8 @@ CACHES = {
         },
     }
 }
+
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'

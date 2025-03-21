@@ -1,5 +1,5 @@
 [project]
-name = "multi-environment"
+name = "configure-celery"
 version = "0.1.0"
 description = ""
 authors = [
@@ -12,7 +12,11 @@ dependencies = [
     "psycopg2-binary (==2.9.10)",
     "gunicorn (==23.0.0)",
     "python-decouple (>=3.8,<4.0)",
-    "django-redis (>=5.4.0,<6.0.0)"
+    "django-redis (>=5.4.0,<6.0.0)",
+    "celery (>=5.4.0,<6.0.0)",
+    "redis (>=5.2.1,<6.0.0)",
+    "pandas (>=2.2.3,<3.0.0)",
+    "django-celery-results (>=2.5.1,<3.0.0)",
 ]
 
 
