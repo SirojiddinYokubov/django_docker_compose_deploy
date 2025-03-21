@@ -15,7 +15,7 @@ Ushbu video seriya orqali Django va FastAPI loyihalarini Docker Compose yordamid
    - Postgresql va Redis xizmatlarini qo‘shish 
 
        
-   [Ushbu dars agendasi](./2.%20Ko‘p%20muhitli%20(multi-environment%3A%20dev%2C%20qa%2C%20prod)%20sozlash/README.md)
+   [Ushbu dars agendasi](./2.%20Ko'p%20muhitli%20(multi-environment%3A%20dev%2C%20qa%2C%20prod)%20sozlash/README.md)
    
 ✅ **3. Celeryni sozlash (Background, Asynchronous tasklar)**
    - .env fayllar yordamida konfiguratsiya  
