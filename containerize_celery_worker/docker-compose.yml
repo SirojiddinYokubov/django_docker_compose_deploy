@@ -1,0 +1,143 @@
+services:
+  web: &web
+#    container_name: web-${ENVIRONMENT-dev}
+#    image: web-${ENVIRONMENT-dev}:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${SVC_PORT}:8000"
+    environment:
+      - ENVIRONMENT=${COMPOSE_PROJECT_NAME-dev}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - static_volume:/app/static
+#      - ./static_data:/app/static
+      - media_volume:/app/media
+    env_file:
+      - .env.${COMPOSE_PROJECT_NAME-dev}
+    networks:
+      - network
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "http://localhost:8000/health/" ]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 40s
+    restart: always
+
+  db:
+#    container_name: db-${ENVIRONMENT-dev}
+    image: postgres:15
+    env_file:
+      - .env.${COMPOSE_PROJECT_NAME-dev}
+    expose:
+      - "5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-demo_user} -d ${DB_NAME:-demo_db}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  redis:
+#    container_name: redis-${ENVIRONMENT-dev}
+    image: redis:7-alpine
+    restart: always
+#    expose:
+#      - "6379"
+    ports:
+      - "6378:6379"
+    networks:
+      - network
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  celery-worker:
+    <<: *web
+#    container_name: celery-worker-${ENVIRONMENT-dev}
+#    image: celery-worker-${ENVIRONMENT-dev}:latest
+    ports: []
+    entrypoint: bash -c "
+         poetry install --without local --no-root
+         && celery -A core worker --loglevel=info -E -Q sales123_queue -c 1 --prefetch-multiplier=1
+        "
+    healthcheck:
+      test: celery -A core inspect ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      mode: replicated
+      replicas: 1
+
+#  celery-worker:
+#    container_name: celery-worker-${ENVIRONMENT-dev}
+#    image: celery-worker-${ENVIRONMENT-dev}:latest
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    environment:
+#      - ENVIRONMENT=${ENVIRONMENT-dev}
+#    entrypoint: bash -c "
+#         poetry install --without local --no-root
+#         && celery -A core worker --loglevel=info -E
+#        "
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+##      web:
+##        condition: service_healthy
+#
+#    env_file:
+#      - .env.${ENVIRONMENT-dev}
+#    networks:
+#      - network
+#    restart: always
+
+volumes:
+    postgres_data:
+      name: postgres_data_${COMPOSE_PROJECT_NAME-dev}
+    static_volume:
+      name: static_volume_${COMPOSE_PROJECT_NAME-dev}
+    media_volume:
+      name: media_volume_${COMPOSE_PROJECT_NAME-dev}
+    redis_data:
+      name: redis_data_${COMPOSE_PROJECT_NAME-dev}
+
+networks:
+  network:
+    name: network-${COMPOSE_PROJECT_NAME-dev}
+
+
+########
+#worker 1
+#  - concurrent 1
+  #  - process 1
+  #  - process 2
+#  - concurrent 2
+  #  - process 1
+  #  - process 2
+
+#worker 2
+#  - process 1
+#  - process 2
