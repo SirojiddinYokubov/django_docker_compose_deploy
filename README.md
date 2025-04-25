@@ -34,7 +34,7 @@ Ushbu video seriya orqali Django va FastAPI loyihalarini Docker Compose yordamid
   
    [Ushbu dars agendasi](./4.%20Celery%20workerni%20docker%20compose%20konteynerga%20olish/README.md)
 
-🔲 **5. RabbitMQni Celery uchun message broker sifatida sozlash**  
+✅ **5. RabbitMQni Celery uchun message broker sifatida sozlash**  
    - RabbitMQ va Erlangni Ubuntu tizimiga o‘rnatish  
    - RabbitMQ’ni Celery uchun message broker sifatida sozlash  
    - RabbitMQ’da foydalanuvchi va vhost yaratish  
