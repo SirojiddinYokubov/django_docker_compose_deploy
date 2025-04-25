@@ -26,10 +26,10 @@ Ushbu video seriya orqali Django va FastAPI loyihalarini Docker Compose yordamid
    [Ushbu dars agendasi](./3.%20Celeryda%20asynchronous%20(asinxron)%20va%20background%20task%20yaratish/README.md)
    
 ✅ **4. Celery workerni docker compose konteynerga olish**
-    - Celery workerni Docker konteynerga olish  
-    - Docker Compose orqali Celery workerni ishga tushirish
-    - Docker compose multiple projectlar bilan ishlash
-    - Celery worker uchun healthcheck yozish
+  - Celery workerni Docker konteynerga olish  
+  - Docker Compose orqali Celery workerni ishga tushirish
+  - Docker compose multiple projectlar bilan ishlash
+  - Celery worker uchun healthcheck yozish
        
   
    [Ushbu dars agendasi](./4.%20Celery%20workerni%20docker%20compose%20konteynerga%20olish/README.md)
